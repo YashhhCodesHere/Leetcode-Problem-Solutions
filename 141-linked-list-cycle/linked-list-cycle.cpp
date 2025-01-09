@@ -9,16 +9,22 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        ListNode* fast = head;
+        // Initialize two pointers
         ListNode* slow = head;
-        while(fast != nullptr && fast -> next != nullptr){
-            slow = slow -> next;
-            fast = fast -> next -> next;
+        ListNode* fast = head;
+
+        // Traverse the list with the two pointers
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;              // Move slow pointer by 1 step
+            fast = fast->next->next;        // Move fast pointer by 2 steps
             
-            if(slow == fast){
+            // If the slow and fast pointers meet, there's a cycle
+            if (slow == fast) {
                 return true;
             }
         }
-        return false;        
+
+        // If fast pointer reaches the end, there's no cycle
+        return false;
     }
 };
