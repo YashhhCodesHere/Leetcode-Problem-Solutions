@@ -9,7 +9,7 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        if(headA == NULL || headB == NULL){
+        if(headA == NULL || headB == NULL){     // Edge Case: Either Lisked List is empty => then NO intersection possible!
             return NULL;
         }
 
