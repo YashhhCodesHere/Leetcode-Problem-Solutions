@@ -11,19 +11,28 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode* root, vector<int>& result){
-        if(root == nullptr){
-            return;
-        }
-
-        result.push_back(root -> val);
-        dfs(root -> left, result);
-        dfs(root -> right, result);
-    }
-
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int> result;
-        dfs(root, result);
+        if(!root){
+            return result;
+        }
+        stack<TreeNode*> s;
+        s.push(root);
+
+        while(!s.empty()){
+            TreeNode* curr = s.top();
+            s.pop();
+            
+            result.push_back(curr -> val);
+
+            if(curr -> right){  //Right child is pushed first as STACK FOLLOW LIFO
+                s.push(curr -> right);
+            }
+            //so that the left child is processed first when popped from the stack.
+            if(curr -> left){
+                s.push(curr -> left);
+            }
+        }
         return result;
     }
 };
