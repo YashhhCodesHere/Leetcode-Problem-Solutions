@@ -11,17 +11,16 @@
  */
 class Solution {
 public:
-    bool isIdentical(TreeNode* a, TreeNode* b){
-        if(a==NULL && b==NULL)
-            return true;
-        if(a==NULL || b==NULL)
-            return false;
-        if(a->val!=b->val)
-            return false;
-        return isIdentical(a->left,b->left) && isIdentical(a->right,b->right);
-    }
-
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        return isIdentical(p, q);
+        // Both nodes are NULL
+        if (p == nullptr && q == nullptr) 
+            return true;
+        
+        // One node is NULL, or their values are different
+        if (p == nullptr || q == nullptr || p->val != q->val) 
+            return false;
+
+        // Recursively check left and right subtrees
+        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
     }
 };
