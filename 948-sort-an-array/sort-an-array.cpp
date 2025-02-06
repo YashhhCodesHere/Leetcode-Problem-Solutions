@@ -1,39 +1,38 @@
 class Solution {
 public:
-    void merge(vector<int>& arr, int left, int mid, int right){
-        vector<int> temp;
-        int i = left, j = mid+1;
-        while(i <= mid && j <= right){
-            if(arr[i] <= arr[j]){
-                temp.push_back(arr[i++]);
-            }else{
-                temp.push_back(arr[j++]);
-            }
-        }
-        while(i <= mid){
-            temp.push_back(arr[i++]);
-        }
-        while(j <= right){
-            temp.push_back(arr[j++]);
+    void heapify(int parentIdx, vector<int>& nums, int size){
+        int leftChild = (2*parentIdx) + 1;
+        int rightChild = (2*parentIdx) + 2;
+        int maxIdx = parentIdx;
+
+        if(leftChild < size && nums[leftChild] > nums[maxIdx]){
+            maxIdx = leftChild;
         }
 
-        for(int idx = left, x=0; idx <= right; idx++){
-            arr[idx] = temp[x++];
+        if(rightChild < size && nums[rightChild] > nums[maxIdx]){
+            maxIdx = rightChild;    // maxIdx is now one of the child's idx
         }
-    }
 
-    void mergeSort(vector<int>& arr, int left, int right){
-        if(left >= right){
-            return;
+        if(maxIdx != parentIdx){
+            swap(nums[parentIdx], nums[maxIdx]);
+            heapify(maxIdx, nums, size);
         }
-        int mid = left + (right-left) / 2;
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid+1, right);
-        merge(arr, left, mid, right);
     }
 
     vector<int> sortArray(vector<int>& nums) {
-        mergeSort(nums, 0, nums.size()-1);
+        int n = nums.size();
+
+        // Building the MaxHeap:-
+        for(int i = n/2-1; i >= 0; i--){
+            heapify(i, nums, n);
+        }
+
+        // Sorting:-
+        for(int i = n-1; i >= 0; i--){
+            swap(nums[0], nums[i]);
+            heapify(0, nums, i);
+        }
+
         return nums;
     }
 };
