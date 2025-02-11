@@ -2,9 +2,8 @@ class Solution {
 public:
     bool uniqueOccurrences(vector<int>& arr) {
         unordered_map<int, int> ump; // (Element, Frequency)
-        int n = arr.size();
-        for(int i = 0; i < n; i++){
-            ump[arr[i]]++;
+        for(auto num : arr){
+            ump[num]++;
         }
 
         unordered_set<int> us;
