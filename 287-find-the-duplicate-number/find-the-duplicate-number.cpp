@@ -1,15 +1,20 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        int duplicateNumber;
+        int slow = nums[0];
+        int fast = nums[0];
 
-        for(size_t i = 0; i < nums.size()-1; i++){
-            if(nums[i] == nums[i+1]){
-                duplicateNumber = nums[i];
-                break;
-            }
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }while(slow != fast);
+
+        slow = nums[0];
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
         }
-        return duplicateNumber;
+
+        return slow;
     }
 };
